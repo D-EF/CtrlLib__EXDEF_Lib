@@ -1,0 +1,69 @@
+<!--
+ * @Date: 2022-04-29 15:35:18
+ * @LastEditors: Darth_Eternalfaith
+ * @LastEditTime: 2022-04-29 17:38:37
+ * @FilePath: \Editor\PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\CtrlLib__EXDEF_LIB.html
+ * html结构
+-->
+<ctrl_tab/>
+
+<div class="viewportFrame-basics" ctrl-for="this.iterator.init()this.iterator.is_NotEnd();this.iterator.next()">
+    <div>
+        <div class="viewportFrame-childBox"
+            ctrl-child_ctrl="Ctrl_tgtAssets"
+            ctrl-child_ctrl_arguments="this.tgtAssets_Init()">
+        </div>
+        
+        <div class="viewportFrame-hand">
+            <div class="viewportFrame-hand-ex"></div>
+            <div class="viewportFrame-hand-top"></div>
+            <div class="viewportFrame-hand-left"></div>
+        </div>
+    </div>
+</div>
+
+<ctrl_tab/>
+
+<ctrlstyle>
+    ${this.folded_CSS_select}{
+        visibility: hidden;
+    }
+    ${this.folded_open_CSS_select}{
+        visibility: visible;
+    }
+</ctrlstyle>
+<div class="toolBox-main"  pa-mousedown="console.log(${window.i})">
+    <ul class="toolBox-list" pa-mouseleave="this.hiddenHand()" 
+        pa-mouseover="this.showHand(e.target)" 
+        pa-click="this.tab_Tool(e.target)"
+        ctrl-for="this.list_iterator.init(),this.maxDepth=0;this.list_iterator.is_NotEnd();this.list_iterator.next()"
+        ctrl-id="toolList"
+    >
+        <li 
+            api-attr-di="this.list_iterator.get_Now__Di()"
+            api-attr-path="this.list_iterator.get_Now__Path()"
+            api-attr-depth="this.list_iterator.get_Now__Depth()"
+            api-attr-tool="this.list_iterator.get_Now()"
+            class="toolBox-item toolBox-item-d${tgt.depth}" 
+            title="${tgt.tool.tip} (${tgt.tool.hotkey.join('+')})"
+            ctrl-style="transform:translate(${tgt.depth*100}%,0);
+                    margin-top:calc(var(--toolbox-width) * ${this.previousElement&&
+                    (this.previousElement.path.length>tgt.path.length?
+                        (this.previousElement.path[this.previousElement.path.length-1]*-1)
+                    :this.previousElement.path.length<tgt.path.length?
+                        -1
+                    :0)
+                })"
+            ctrl-id="toolItem"
+            cnm="${(this.eg[tgt.depth]&&(this.eg[tgt.depth].next_same_depth_Di=tgt.di)),
+                (this.eg[tgt.depth]=tgt),
+                (this.previousElement=tgt),
+                ((this.maxDepth>=tgt.depth)||(this.maxDepth=tgt.depth)),''}"
+        >
+            <i class="toolBox-item-icon iconSpritesSvg iconSpritesSvg-${this.list_iterator.get_Now().u+''+this.list_iterator.get_Now().v}"></i>
+        </li>
+    </ul>
+</div>
+
+<ctrl_tab/>
+
