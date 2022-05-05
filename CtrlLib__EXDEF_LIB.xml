@@ -7,7 +7,7 @@
 -->
 <ctrl_tab/>
 
-<div class="viewportFrame-basics" ctrl-for="this.iterator.init()this.iterator.is_NotEnd();this.iterator.next()">
+<div class="viewportFrame-basics" ctrl-for="this.iterator.init();this.iterator.is_NotEnd();this.iterator.next()">
     <div>
         <div class="viewportFrame-childBox"
             ctrl-child_ctrl="Ctrl_tgtAssets"
