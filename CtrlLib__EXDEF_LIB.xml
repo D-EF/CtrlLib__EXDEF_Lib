@@ -8,10 +8,12 @@
 <ctrl_tab/>
 
 <div class="viewportFrame-basics" ctrl-for="this.iterator.init();this.iterator.is_NotEnd();this.iterator.next()">
-    <div>
+    <div style="
+        ${this.iterator.get_Now_axis_sp()}%;
+    ">
         <div class="viewportFrame-childBox"
-            ctrl-child_ctrl="Ctrl_tgtAssets"
-            ctrl-child_ctrl_arguments="this.tgtAssets_Init()">
+            ctrl-child_ctrl="${this.iterator.get_Now()}"
+        >
         </div>
         
         <div class="viewportFrame-hand">

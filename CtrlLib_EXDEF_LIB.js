@@ -1,15 +1,20 @@
 /*
  * @Date: 2022-05-04 20:28:00
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-05 15:31:25
- * @FilePath: \Editor\PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\CtrlLib_EXDEF_LIB.js
+ * @LastEditTime: 2022-05-07 16:34:30
+ * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\CtrlLib_EXDEF_LIB.js
  */
 import { add_DependencyListener, dependencyMapping, getCurrAbsPath, remove_DependencyListener_all, rltToAbs } from "../basics/Basics.js"
 import { DEF_VirtualElementList as VES, ExCtrl } from "../CtrlLib/CtrlLib.js";
 
 const JS_FILE_PATH = getCurrAbsPath();
 const XML_FILE_PATH = rltToAbs("./CtrlLib__EXDEF_LIB.xml",JS_FILE_PATH);
+const CSS_FILE_PATH = rltToAbs("./CtrlLib__EXDEF_LIB.css",JS_FILE_PATH);
 
+const CSS_LINK=document.createElement("link");
+CSS_LINK.rel="stylesheet";
+CSS_LINK.href=CSS_FILE_PATH
+document.head.append(CSS_LINK);
 
 var CtrlLib__EXDEF_LIB__XML_DATA={};
 /**
@@ -43,7 +48,6 @@ class ExCtrl_DEF extends ExCtrl{
         }
         var that=this;
         add_DependencyListener(CtrlLib__EXDEF_LIB__XML,"xml_loaded",function(xml_loaded){
-            console.log(xml_loaded)
             if(xml_loaded){
                 that.addend(element);
             }
