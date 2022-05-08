@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-04-29 09:56:57
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-07 21:52:03
+ * @LastEditTime: 2022-05-08 21:05:28
  * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\Viewport_Frame.js
  */
 import { dependencyMapping, Iterator__Tree } from "../basics/Basics.js";
@@ -17,8 +17,14 @@ import { CtrlLib__EXDEF_LIB__XML, ExCtrl_DEF } from "./CtrlLib_EXDEF_LIB.js";
     var base={
         children:[
             {
-                sp:[50],
-                children:["null","null"],
+                sp:[40,70],
+                children:["null",
+                {
+                    sp:[50],
+                    children:["null","null"],
+                },
+                "null",
+            ],
             }
         ]
     }
@@ -39,18 +45,28 @@ class Iterator__Viewport_Region_Tree extends Iterator__Tree{
         super.next();
         var d=this._depth;
         var p=this._now_path[this._now_path.length-1];
-        var axis=(d-1)%2;
+        var axis=Math.abs((d-1)%2);
         
-        if((d>0)&&this._gg[d].sp&&this._gg[d-1].sp[p]!==undefined){
-            this.temp[axis]=this.v_log[d]=this._gg[d-1].sp[p];
+        if((d>0)&&(this._now_node_path[d-1]?.sp[p-1]!==undefined)){
+            this.temp[axis]=this.v_log[d]=this._now_node_path[d-1].sp[p-1];
         }
         
         if((d>=0)&&!(this.get_Now().constructor===String)){
-            this.next();
+            return this.next();
         }
+        console.error(d,p,this._now_node_path,axis,this.temp);
     }
-    get_Now_v(){
-        return this.v_log[this._depth];
+    get_Now__Axis(){
+        return Math.abs((this._depth-1)%2);
+    }
+    get_Now__Axis_I(){
+        return Math.abs((this._depth)%2);
+    }
+    get_Now__SP(){
+        return this.temp[this.get_Now__Axis()];
+    }
+    get_Now__SP_I(){
+        return this.temp[this.get_Now__Axis_I()];
     }
 }
 
@@ -61,6 +77,8 @@ class Viewport_Frame extends ExCtrl_DEF{
         this.iterator=new Iterator__Viewport_Region_Tree(this.viewport_tree);
     }
 }
+Viewport_Frame.prototype.AXIS_HEAD  = ["left","top"];
+Viewport_Frame.prototype.AXIS_END   = ["right","bottom"];
 dependencyMapping(Viewport_Frame.prototype,CtrlLib__EXDEF_LIB__XML,["bluePrint"],["Viewport_Frame"]);
 Viewport_Frame.prototype.childCtrlType={
     null:CtrlLib

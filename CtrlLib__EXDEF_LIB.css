@@ -1,4 +1,7 @@
-.viewportFrame-basics{
+.viewportFrame-basics,.viewportFrame-list{
     width: 100%;
     height: 100%;
+}
+.viewportFrame-item{
+    position:absolute;
 }

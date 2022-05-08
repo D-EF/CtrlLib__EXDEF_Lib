@@ -7,21 +7,55 @@
 -->
 <ctrl_tab/>
 
-<div class="viewportFrame-basics" ctrl-for="this.iterator.init();this.iterator.is_NotEnd();this.iterator.next()">
-    <div style="
-        ${this.iterator.get_Now_axis_sp()}%;
-    ">
-        <div class="viewportFrame-childBox"
-            ctrl-child_ctrl="${this.iterator.get_Now()}"
+<div class="viewportFrame-basics">
+    <ul class="viewportFrame-list" ctrl-for="this.iterator.init();this.iterator.is_NotEnd();this.iterator.next()">
+        <li class="viewportFrame-item"
+            style="
+                ${this.AXIS_HEAD[this.iterator.get_Now__Axis()]}:${this.iterator.get_Now__SP()}%;
+            "
+            api-attr-depth="this.iterator.get_Now__Depth()"
+            api-attr-axis="this.iterator.get_Now__Axis()"
+            api-attr-axis_i="this.iterator.get_Now__Axis_I()"
+            api-attr-sp_i="this.iterator.get_Now__SP_I()"
+            api-attr-sp="this.iterator.get_Now__SP()"
+            
+            ca-render="
+                var tempE=tgt.previousElementSibling;
+                if(!tempE)return;
+                if(tempE.depth<=tgt.depth){
+                    tgt.style[this.AXIS_HEAD[tgt.axis_i]]=tgt.sp_i+'%';
+                }
+                while(tempE){
+                    if(tempE.axis!==tgt.axis){
+                        tempE.style[this.AXIS_END[tgt.axis]]=100-tgt.sp+'%';
+                    }
+                    if(tempE.depth===tgt.depth){
+                        return;
+                    }
+                    tempE=tempE.previousElementSibling;
+                }
+            "
         >
-        </div>
-        
-        <div class="viewportFrame-hand">
-            <div class="viewportFrame-hand-ex"></div>
-            <div class="viewportFrame-hand-top"></div>
-            <div class="viewportFrame-hand-left"></div>
-        </div>
-    </div>
+            <div class="viewportFrame-childBox"
+                ctrl-child_ctrl="${this.iterator.get_Now()}"
+            >
+            </div>
+            
+            <div class="viewportFrame-hand">
+                <div class="viewportFrame-hand-ex"></div>
+                <div class="viewportFrame-hand-top"></div>
+                <div class="viewportFrame-hand-left"></div>
+            </div>
+        </li>
+    </ul>
+    <div 
+        ca-render="
+            var tempE=tgt.previousElementSibling.lastElementChild;
+            if(tempE){
+            tempE.style.right= '0%';
+            tempE.style.bottom='0%';
+            }
+    "></div>
 </div>
 
 <ctrl_tab/>
