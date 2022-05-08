@@ -16,7 +16,7 @@
             api-attr-depth="this.iterator.get_Now__Depth()"
             api-attr-axis="this.iterator.get_Now__Axis()"
             api-attr-axis_i="this.iterator.get_Now__Axis_I()"
-            api-attr-sp_i="this.iterator.get_Now__SP_I()"
+            api-attr-sp_i="this.iterator.get_Now__SP_I()||100"
             api-attr-sp="this.iterator.get_Now__SP()"
             
             ca-render="
@@ -24,10 +24,12 @@
                 if(!tempE)return;
                 if(tempE.depth<=tgt.depth){
                     tgt.style[this.AXIS_HEAD[tgt.axis_i]]=tgt.sp_i+'%';
+                }else{
+                    
                 }
                 while(tempE){
                     if(tempE.axis!==tgt.axis){
-                        tempE.style[this.AXIS_END[tgt.axis]]=100-tgt.sp+'%';
+                        tempE.style[this.AXIS_END[tgt.axis_i]]=100-tgt.sp_i+'%';
                     }
                     if(tempE.depth===tgt.depth){
                         return;
