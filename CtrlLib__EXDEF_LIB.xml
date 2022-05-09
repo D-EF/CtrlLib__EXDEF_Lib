@@ -48,6 +48,7 @@
             </div>
             
             <div class="viewportFrame-hand-sp"></div>
+            <div class="viewportFrame-hand-sp_i"></div>
             <div class="viewportFrame-hand-ex"></div>
         </li>
     </ul>

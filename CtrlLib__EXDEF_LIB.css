@@ -9,16 +9,46 @@
     width: 100%;
     height: 100%;
 }
-.viewportFrame-hand-sp{
+.viewportFrame-hand-sp,.viewportFrame-hand-sp_i{
     position:absolute;
-    top:0;
-    left:0;
+    top: -1px;
+    left:-1px;
+    background-color:#f00;
+}
+.viewportFrame-hand-sp_i{
+    background-color:#0f0;
 }
 .viewportFrame-axis0>.viewportFrame-hand-sp{
-    width:100%;
+    width:1px;
+    height:100%;
+    cursor: col-resize;
 }
-
 .viewportFrame-axis1>.viewportFrame-hand-sp{
     width:100%;
     height:1px;
+    cursor: row-resize;
+}
+.viewportFrame-axis1>.viewportFrame-hand-sp_i{
+    height:100%;
+    width:1px;
+}
+.viewportFrame-axis0>.viewportFrame-hand-sp_i{
+    width:100%;
+    height:1px;
+}
+.viewportFrame-item.viewportFrame-axis0{
+    width: clac(100% - 2px);
+}
+.viewportFrame-item.viewportFrame-axis1{
+    height: clac(100% - 2px);
+}
+
+.viewportFrame-hand-ex{
+    position:absolute;
+    left:0;
+    bottom: 0;
+    width:8px;
+    height:8px;
+    background-color: #ff0;
+    cursor: crosshair;
 }
