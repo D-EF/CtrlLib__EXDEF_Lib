@@ -5,3 +5,20 @@
 .viewportFrame-item{
     position:absolute;
 }
+.viewportFrame-childBox{
+    width: 100%;
+    height: 100%;
+}
+.viewportFrame-hand-sp{
+    position:absolute;
+    top:0;
+    left:0;
+}
+.viewportFrame-axis0>.viewportFrame-hand-sp{
+    width:100%;
+}
+
+.viewportFrame-axis1>.viewportFrame-hand-sp{
+    width:100%;
+    height:1px;
+}

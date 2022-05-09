@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-04-29 09:56:57
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-08 21:53:48
+ * @LastEditTime: 2022-05-09 15:51:29
  * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\Viewport_Frame.js
  */
 import { dependencyMapping, Iterator__Tree } from "../basics/Basics.js";
@@ -49,12 +49,9 @@ class Iterator__Viewport_Region_Tree extends Iterator__Tree{
         var axis=(d+1)%2;
         var axis_i=(d)%2;
         
-        if(d>=0)
-        this.temp[axis]=this.v_log[d]=((this._now_node_path[d-1]?.sp||'')[p-1])||this.v_log[d-2]||0;
+        if(d>=0)this.temp[axis]=this.v_log[d]=((this._now_node_path[d-1]?.sp||'')[p-1])||this.v_log[d-2]||0;
         this.temp[axis_i]=this.v_log[d-1]||0;
 
-        console.error(d,p,this._now_node_path,axis,this.temp,this.v_log);
-        
         if((d>=0)&&!(this.get_Now().constructor===String)){
             return this.next();
         }
@@ -76,9 +73,14 @@ class Iterator__Viewport_Region_Tree extends Iterator__Tree{
 class Viewport_Frame extends ExCtrl_DEF{
     constructor(viewport_tree){
         super();
-        this.viewport_tree=viewport_tree||base;
-        this.iterator=new Iterator__Viewport_Region_Tree(this.viewport_tree);
+        this._viewport_tree=viewport_tree||base;
+        this.iterator=new Iterator__Viewport_Region_Tree(this._viewport_tree);
     }
+    set viewport_tree(new_viewport_tree){
+        this._viewport_tree=new_viewport_tree;
+        this.iterator.data=this._new_viewport_tree;
+    }
+    get viewport_tree(){return this._viewport_tree};
 }
 Viewport_Frame.prototype.AXIS_HEAD  = ["left","top"];
 Viewport_Frame.prototype.AXIS_END   = ["right","bottom"];

@@ -9,33 +9,37 @@
 
 <div class="viewportFrame-basics">
     <ul class="viewportFrame-list" ctrl-for="this.iterator.init();this.iterator.is_NotEnd();this.iterator.next()">
-        <li class="viewportFrame-item"
+        <li 
             style="
-                ${this.AXIS_HEAD[this.iterator.get_Now__Axis()]}:${this.iterator.get_Now__SP()}%;
+                top: ${this.iterator.temp[1]}%;
+                left:${this.iterator.temp[0]}%;
             "
             api-attr-depth="this.iterator.get_Now__Depth()"
             api-attr-axis="this.iterator.get_Now__Axis()"
             api-attr-axis_i="this.iterator.get_Now__Axis_I()"
             api-attr-sp_i="this.iterator.get_Now__SP_I()||100"
             api-attr-sp="this.iterator.get_Now__SP()"
-            
+            class="viewportFrame-item viewportFrame-axis${tgt.axis}"
             ca-render="
                 var tempE=tgt.previousElementSibling;
                 if(!tempE)return;
-                if(tempE.depth<=tgt.depth){
-                    tgt.style[this.AXIS_HEAD[tgt.axis_i]]=tgt.sp_i+'%';
-                }else{
-                    
-                }
-                while(tempE){
+
+                do{
+                    if((tempE.depth>tgt.depth)&&(tempE.axis!==tgt.axis)){
+                        tempE.style[this.AXIS_END[tgt.axis]]=100-tgt.sp+'%';
+                    }
+
                     if(tempE.axis!==tgt.axis){
                         tempE.style[this.AXIS_END[tgt.axis_i]]=100-tgt.sp_i+'%';
                     }
-                    if(tempE.depth===tgt.depth){
+                    else if(tempE.depth===tgt.depth){
+                        tempE.style[this.AXIS_END[tgt.axis]]=100-tgt.sp+'%';
+                    }
+                    if(tempE.depth<=tgt.depth){
                         return;
                     }
                     tempE=tempE.previousElementSibling;
-                }
+                }while(tempE);
             "
         >
             <div class="viewportFrame-childBox"
@@ -43,19 +47,17 @@
             >
             </div>
             
-            <div class="viewportFrame-hand">
-                <div class="viewportFrame-hand-ex"></div>
-                <div class="viewportFrame-hand-top"></div>
-                <div class="viewportFrame-hand-left"></div>
-            </div>
+            <div class="viewportFrame-hand-sp"></div>
+            <div class="viewportFrame-hand-ex"></div>
         </li>
     </ul>
     <div 
         ca-render="
             var tempE=tgt.previousElementSibling.lastElementChild;
-            if(tempE){
-            tempE.style.right= '0%';
-            tempE.style.bottom='0%';
+            while(tempE){
+                if(!tempE.style.right)tempE.style.right= '0%';
+                if(!tempE.style.bottom)tempE.style.bottom='0%';
+                tempE=tempE.previousElementSibling;
             }
     "></div>
 </div>

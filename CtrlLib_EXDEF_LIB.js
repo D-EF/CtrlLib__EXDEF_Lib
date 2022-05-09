@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-05-04 20:28:00
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-07 16:34:30
+ * @LastEditTime: 2022-05-09 15:46:02
  * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\CtrlLib_EXDEF_LIB.js
  */
 import { add_DependencyListener, dependencyMapping, getCurrAbsPath, remove_DependencyListener_all, rltToAbs } from "../basics/Basics.js"
@@ -23,20 +23,23 @@ var CtrlLib__EXDEF_LIB__XML_DATA={};
  * @property {VES} Viewport_Frame
  */
 
+const XML_MAPPING=[
+    "xml_loaded",
+    "Viewport_Frame",
+    "ToolBox"
+];
 /** @type {type__CtrlLib__EXDEF_LIB__XML} */
 var CtrlLib__EXDEF_LIB__XML={};
-dependencyMapping(CtrlLib__EXDEF_LIB__XML,CtrlLib__EXDEF_LIB__XML_DATA,[
-    "xml_loaded",
-    "Viewport_Frame"
-]);
+
+dependencyMapping(CtrlLib__EXDEF_LIB__XML,CtrlLib__EXDEF_LIB__XML_DATA,XML_MAPPING);
 
 var xhr=new XMLHttpRequest();
 xhr.open("get",XML_FILE_PATH);
 xhr.onload=function(e){
     var str_sp=xhr.response.split("<ctrl_tab/>");
-
-    CtrlLib__EXDEF_LIB__XML.Viewport_Frame=VES.xmlToVE(str_sp[1]);
-    
+    for(var i=XML_MAPPING.length-1;i>0;--i){
+        CtrlLib__EXDEF_LIB__XML[XML_MAPPING[i]]=VES.xmlToVE(str_sp[i]);
+    }
     CtrlLib__EXDEF_LIB__XML.xml_loaded=true;
     remove_DependencyListener_all(CtrlLib__EXDEF_LIB__XML,"xml_loaded");
 }
