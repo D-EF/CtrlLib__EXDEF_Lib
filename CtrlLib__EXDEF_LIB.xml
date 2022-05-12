@@ -19,6 +19,7 @@
             api-attr-axis_i="this.iterator.get_Now__Axis_I()"
             api-attr-sp_i="this.iterator.get_Now__SP_I()||100"
             api-attr-sp="this.iterator.get_Now__SP()"
+            api-attr-path="this.iterator.get_Now__Path()"
             class="viewportFrame-item viewportFrame-axis${tgt.axis}"
             ca-render="
                 var tempE=tgt.previousElementSibling;
@@ -47,8 +48,8 @@
             >
             </div>
             
-            <div class="viewportFrame-hand-sp"></div>
-            <div class="viewportFrame-hand-sp_i"></div>
+            <div pa-mousedown="this.sp_Hand(e,tgt.parentElement.path)" class="viewportFrame-hand-sp"></div>
+            <div pa-mousedown="this.sp_Hand_i(e,tgt.parentElement.path)" class="viewportFrame-hand-sp_i"></div>
             <div class="viewportFrame-hand-ex"></div>
         </li>
     </ul>

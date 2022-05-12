@@ -28,13 +28,15 @@
     height:1px;
     cursor: row-resize;
 }
-.viewportFrame-axis1>.viewportFrame-hand-sp_i{
-    height:100%;
-    width:1px;
-}
 .viewportFrame-axis0>.viewportFrame-hand-sp_i{
     width:100%;
     height:1px;
+    cursor: row-resize;
+}
+.viewportFrame-axis1>.viewportFrame-hand-sp_i{
+    height:100%;
+    width:1px;
+    cursor: col-resize;
 }
 .viewportFrame-item.viewportFrame-axis0{
     width: clac(100% - 2px);

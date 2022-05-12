@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-04-29 09:56:57
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-09 15:51:29
+ * @LastEditTime: 2022-05-12 20:47:36
  * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\Viewport_Frame.js
  */
 import { dependencyMapping, Iterator__Tree } from "../basics/Basics.js";
@@ -81,6 +81,17 @@ class Viewport_Frame extends ExCtrl_DEF{
         this.iterator.data=this._new_viewport_tree;
     }
     get viewport_tree(){return this._viewport_tree};
+    /**
+     * @param {MouseEvent} e 
+     * @param {Number[]} path 
+     */
+    sp_Hand(e,path){
+        console.log(path);
+    }
+    sp_Hand_i(e,path){
+        this.sp_Hand(e,path.slice(0,-1));
+    }
+    
 }
 Viewport_Frame.prototype.AXIS_HEAD  = ["left","top"];
 Viewport_Frame.prototype.AXIS_END   = ["right","bottom"];
