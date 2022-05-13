@@ -7,8 +7,8 @@
 -->
 <ctrl_tab/>
 
-<div class="viewportFrame-basics">
-    <ul class="viewportFrame-list" ctrl-for="this.iterator.init();this.iterator.is_NotEnd();this.iterator.next()">
+<div class="viewportFrame-root" ctrl-id="viewportFrame_root">
+    <ul class="viewportFrame-list" ctrl-id="viewportFrame_List" ctrl-for="this.iterator.init();this.iterator.is_NotEnd();this.iterator.next()">
         <li 
             style="
                 top: ${this.iterator.temp[1]}%;
@@ -20,6 +20,7 @@
             api-attr-sp_i="this.iterator.get_Now__SP_I()||100"
             api-attr-sp="this.iterator.get_Now__SP()"
             api-attr-path="this.iterator.get_Now__Path()"
+            api-attr-node_path="this.iterator.get_Now__NodePath()"
             class="viewportFrame-item viewportFrame-axis${tgt.axis}"
             ca-render="
                 var tempE=tgt.previousElementSibling;
@@ -48,8 +49,8 @@
             >
             </div>
             
-            <div pa-mousedown="this.sp_Hand(e,tgt.parentElement.path)" class="viewportFrame-hand-sp"></div>
-            <div pa-mousedown="this.sp_Hand_i(e,tgt.parentElement.path)" class="viewportFrame-hand-sp_i"></div>
+            <div pa-mousedown="this.sp_Hand   (e,tgt.parentElement.path,tgt.parentElement)" class="viewportFrame-hand-sp"></div>
+            <div pa-mousedown="this.sp_Hand__i(e,tgt.parentElement.path,tgt.parentElement)" class="viewportFrame-hand-sp_i"></div>
             <div class="viewportFrame-hand-ex"></div>
         </li>
     </ul>

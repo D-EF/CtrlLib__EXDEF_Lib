@@ -1,6 +1,9 @@
-.viewportFrame-basics,.viewportFrame-list{
+.viewportFrame-root,.viewportFrame-list{
     width: 100%;
     height: 100%;
+}
+.viewportFrame-list--changing{
+    pointer-events: none;
 }
 .viewportFrame-item{
     position:absolute;
@@ -44,7 +47,6 @@
 .viewportFrame-item.viewportFrame-axis1{
     height: clac(100% - 2px);
 }
-
 .viewportFrame-hand-ex{
     position:absolute;
     left:0;

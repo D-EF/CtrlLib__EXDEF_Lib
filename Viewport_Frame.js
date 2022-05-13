@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-04-29 09:56:57
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-12 20:47:36
+ * @LastEditTime: 2022-05-13 22:29:23
  * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\Viewport_Frame.js
  */
 import { dependencyMapping, Iterator__Tree } from "../basics/Basics.js";
@@ -81,15 +81,43 @@ class Viewport_Frame extends ExCtrl_DEF{
         this.iterator.data=this._new_viewport_tree;
     }
     get viewport_tree(){return this._viewport_tree};
+    /** @type {HTMLElement} */
+    get view_box_list(){return this.elements.viewportFrame_List;}
+    /** @type {HTMLElement} */
+    get view_root(){return this.elements.viewportFrame_root;}
     /**
      * @param {MouseEvent} e 
      * @param {Number[]} path 
+     * @param {HTMLElement} item
      */
-    sp_Hand(e,path){
-        console.log(path);
+    sp_Hand(e,path,item){
+        this.view_box_list.classList.add("viewportFrame-list--changing");
+        
+        var d=item.depth;
+        while((!path[d])&&d>0){
+            --d;
+        };
+        if(d===0){
+            this.sp_Hand_Exit();
+            return;
+        }
+
+        var end_i=path[d]-1;
+        /** @type {Viewport_Region_Tree[]} */
+        var node_path=item.node_path;
+
+        console.log(node_path[d-1].sp[end_i]);
+        this.sp_Hand_Exit();
+
+        this.view_root.addEventListener("mousemove",function(e){
+
+        })
     }
-    sp_Hand_i(e,path){
-        this.sp_Hand(e,path.slice(0,-1));
+    sp_Hand__i(e,path,item){
+        this.sp_Hand(e,path.slice(0,-1),item);
+    }
+    sp_Hand_Exit(){
+        this.view_box_list.classList.remove("viewportFrame-list--changing");
     }
     
 }
