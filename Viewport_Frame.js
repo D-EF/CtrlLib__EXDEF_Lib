@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-04-29 09:56:57
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-13 22:29:23
+ * @LastEditTime: 2022-05-14 15:20:51
  * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\Viewport_Frame.js
  */
 import { dependencyMapping, Iterator__Tree } from "../basics/Basics.js";
@@ -30,6 +30,7 @@ import { CtrlLib__EXDEF_LIB__XML, ExCtrl_DEF } from "./CtrlLib_EXDEF_LIB.js";
     }
 // 预设end 
 
+/** 区域树生成dom使用的遍历器 */
 class Iterator__Viewport_Region_Tree extends Iterator__Tree{
     constructor(data){
         super(data,"children");
@@ -73,18 +74,45 @@ class Iterator__Viewport_Region_Tree extends Iterator__Tree{
 class Viewport_Frame extends ExCtrl_DEF{
     constructor(viewport_tree){
         super();
+        var that=this;
+
         this._viewport_tree=viewport_tree||base;
         this.iterator=new Iterator__Viewport_Region_Tree(this._viewport_tree);
+
+        /** @type {function(MouseEvent)}  */
+        this.view_root_mouse_move_event=function(e){
+            var {node_path,d,end_i}=that.temp__change_sp;
+
+            var axis=that.sp_indicator_axis;
+            var sp_t=e["offset"+that.AXIS[axis]],
+                w=that.view_root[that.AXIS_SIZE[axis]],
+                sp=sp_t/w*100;
+
+            var max=(node_path[d-1].sp[end_i+1])||w,
+                min=(node_path[d-1].sp[end_i-1])||0;
+            if(sp>max)sp=max;
+            if(sp<min)sp=min;
+            
+            (node_path[d-1].sp[end_i])=sp;
+            that.sp_indicator.className="viewportFrame-sp_indicator-axis"+axis;
+            that.sp_indicator.style.cssText=that.AXIS_HEAD[axis]+":"+sp+"%;";
+        }
+        /** @type {function}  */
+        this.view_root_mouse_exit_event=function(e){
+            that.sp_Hand_Exit(e);
+        };
     }
     set viewport_tree(new_viewport_tree){
         this._viewport_tree=new_viewport_tree;
         this.iterator.data=this._new_viewport_tree;
     }
     get viewport_tree(){return this._viewport_tree};
-    /** @type {HTMLElement} */
+    /** @type {HTMLElement} 列表 */
     get view_box_list(){return this.elements.viewportFrame_List;}
-    /** @type {HTMLElement} */
+    /** @type {HTMLElement} 视口的根元素 */
     get view_root(){return this.elements.viewportFrame_root;}
+    /** @type {HTMLElement} 操作指示器 */
+    get sp_indicator(){return this.elements.sp_indicator;}
     /**
      * @param {MouseEvent} e 
      * @param {Number[]} path 
@@ -102,27 +130,35 @@ class Viewport_Frame extends ExCtrl_DEF{
             return;
         }
 
+
+        this.sp_indicator_axis=(d+1)%2;
         var end_i=path[d]-1;
         /** @type {Viewport_Region_Tree[]} */
         var node_path=item.node_path;
 
-        console.log(node_path[d-1].sp[end_i]);
-        this.sp_Hand_Exit();
-
-        this.view_root.addEventListener("mousemove",function(e){
-
-        })
+        this.temp__change_sp={node_path,d,end_i};
+        
+        this.view_root.addEventListener("mousemove",this.view_root_mouse_move_event);
+        this.view_root.addEventListener("mouseup",this.view_root_mouse_exit_event);
     }
     sp_Hand__i(e,path,item){
-        this.sp_Hand(e,path.slice(0,-1),item);
+        this.sp_Hand(e,path.slice(0,-1),item);  
     }
-    sp_Hand_Exit(){
+    sp_Hand_Exit(e){
+        this.view_root.removeEventListener("mousemove",this.view_root_mouse_move_event);
+        this.view_root.removeEventListener("mouseup",this.view_root_mouse_exit_event);
         this.view_box_list.classList.remove("viewportFrame-list--changing");
+        this.sp_indicator.className="hidden";
+        if(e){
+            this.reRender();
+        }
     }
     
 }
 Viewport_Frame.prototype.AXIS_HEAD  = ["left","top"];
 Viewport_Frame.prototype.AXIS_END   = ["right","bottom"];
+Viewport_Frame.prototype.AXIS       = ["X","Y"];
+Viewport_Frame.prototype.AXIS_SIZE  = ["offsetWidth","offsetHeight"];
 dependencyMapping(Viewport_Frame.prototype,CtrlLib__EXDEF_LIB__XML,["bluePrint"],["Viewport_Frame"]);
 Viewport_Frame.prototype.childCtrlType={
     null:CtrlLib

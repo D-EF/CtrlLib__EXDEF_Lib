@@ -49,12 +49,14 @@
             >
             </div>
             
+            <div class="viewportFrame-hand-ex"></div>
             <div pa-mousedown="this.sp_Hand   (e,tgt.parentElement.path,tgt.parentElement)" class="viewportFrame-hand-sp"></div>
             <div pa-mousedown="this.sp_Hand__i(e,tgt.parentElement.path,tgt.parentElement)" class="viewportFrame-hand-sp_i"></div>
-            <div class="viewportFrame-hand-ex"></div>
         </li>
     </ul>
     <div 
+        ctrl-id="sp_indicator"
+        class="hidden"
         ca-render="
             var tempE=tgt.previousElementSibling.lastElementChild;
             while(tempE){
