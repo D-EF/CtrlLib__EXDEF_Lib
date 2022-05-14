@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-04-29 09:56:57
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-14 20:30:07
+ * @LastEditTime: 2022-05-14 20:34:14
  * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\Viewport_Frame.js
  */
 import { dependencyMapping, Iterator__Tree } from "../basics/Basics.js";
@@ -152,12 +152,13 @@ class Viewport_Frame extends ExCtrl_DEF{
 
         // 向下取范围
         if(!(this_node.constructor===String)){
-            i=new Iterator__Tree(this_node)
+            i=new Iterator__Tree(this_node);
             for(i.init();i.is_NotEnd();i.next()){
-                temp=i.get_Now()
-                if((temp.constructor===String)||!(i.get_Now__Depth%2)){
+                temp=i.get_Now();
+                if((temp.constructor===String)||(i.get_Now__Depth%2)){
                     continue;
                 }
+                console.log(temp);
                 if(max>temp.sp[0]){
                     max=temp.sp[0]
                 }
