@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-04-29 09:56:57
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-14 15:20:51
+ * @LastEditTime: 2022-05-14 20:30:07
  * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\Viewport_Frame.js
  */
 import { dependencyMapping, Iterator__Tree } from "../basics/Basics.js";
@@ -21,7 +21,11 @@ import { CtrlLib__EXDEF_LIB__XML, ExCtrl_DEF } from "./CtrlLib_EXDEF_LIB.js";
                 "null",
                 {
                     sp:[50],
-                    children:["null","null"],
+                    children:["null",
+                    {
+                        sp:[40,50],
+                        children:["null","null","null"],
+                    }],
                 },
                 "null",
                 "null",
@@ -81,15 +85,13 @@ class Viewport_Frame extends ExCtrl_DEF{
 
         /** @type {function(MouseEvent)}  */
         this.view_root_mouse_move_event=function(e){
-            var {node_path,d,end_i}=that.temp__change_sp;
+            var {node_path,d,end_i,max,min}=that.temp__change_sp;
 
             var axis=that.sp_indicator_axis;
             var sp_t=e["offset"+that.AXIS[axis]],
                 w=that.view_root[that.AXIS_SIZE[axis]],
                 sp=sp_t/w*100;
 
-            var max=(node_path[d-1].sp[end_i+1])||w,
-                min=(node_path[d-1].sp[end_i-1])||0;
             if(sp>max)sp=max;
             if(sp<min)sp=min;
             
@@ -114,29 +116,85 @@ class Viewport_Frame extends ExCtrl_DEF{
     /** @type {HTMLElement} 操作指示器 */
     get sp_indicator(){return this.elements.sp_indicator;}
     /**
+     * 控制框架窗口大小的手柄
      * @param {MouseEvent} e 
      * @param {Number[]} path 
-     * @param {HTMLElement} item
+     * @param {HTMLElement} item 
      */
     sp_Hand(e,path,item){
         this.view_box_list.classList.add("viewportFrame-list--changing");
         
-        var d=item.depth;
+        var d=path.length-1;
+        
         while((!path[d])&&d>0){
-            --d;
+            d-=2;
         };
+        
         if(d===0){
             this.sp_Hand_Exit();
             return;
         }
 
-
-        this.sp_indicator_axis=(d+1)%2;
+        
         var end_i=path[d]-1;
         /** @type {Viewport_Region_Tree[]} */
-        var node_path=item.node_path;
+        var node_path=item.node_path,
+            p_node=node_path[d-1],
+            this_node=node_path[d],
+            last_node=p_node.children[path[d]-1],
+            that=this,
+            axis=this.sp_indicator_axis=(d+1)%2;
+        var max=Infinity,
+            min=-1,
+            td,i,j;
+        /**@type {Viewport_Region_Tree} */
+        var temp;
 
-        this.temp__change_sp={node_path,d,end_i};
+        // 向下取范围
+        if(!(this_node.constructor===String)){
+            i=new Iterator__Tree(this_node)
+            for(i.init();i.is_NotEnd();i.next()){
+                temp=i.get_Now()
+                if((temp.constructor===String)||!(i.get_Now__Depth%2)){
+                    continue;
+                }
+                if(max>temp.sp[0]){
+                    max=temp.sp[0]
+                }
+            }
+        }else{
+            max=(p_node.sp[end_i+1]);
+        }
+        
+        if(last_node&&!(last_node.constructor===String)){
+            i=new Iterator__Tree(last_node)
+            for(i.init();i.is_NotEnd();i.next()){
+                temp=i.get_Now();
+                if((temp.constructor===String)||(i.get_Now__Depth%2)){
+                    continue;
+                }
+                if(min<temp.sp[temp.sp.length-1]){
+                    min=temp.sp[temp.sp.length-1];
+                }
+            }
+        }else{
+            min=(p_node.sp[end_i-1]);
+        }
+        console.log(min,max);
+        // 向上取范围
+        if((max===undefined)||(min===undefined)||(max===Infinity)||(min===-1)){
+            td=d;
+            while(td-3>=0){
+                td-=2;
+                if(min===undefined)min=node_path[td-1].sp[path[td]-1];
+                if(max===undefined)max=node_path[td-1].sp[path[td]];
+                console.log(max)
+            }
+            if(max===undefined)max=100;
+            if(min===undefined)min=0;
+        }
+
+        this.temp__change_sp={node_path,d,end_i,path,min,max};
         
         this.view_root.addEventListener("mousemove",this.view_root_mouse_move_event);
         this.view_root.addEventListener("mouseup",this.view_root_mouse_exit_event);

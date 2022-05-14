@@ -27,7 +27,7 @@
                 if(!tempE)return;
 
                 do{
-                    if((tempE.depth>tgt.depth)&&(tempE.axis!==tgt.axis)){
+                    if((tempE.depth>tgt.depth)){
                         tempE.style[this.AXIS_END[tgt.axis]]=100-tgt.sp+'%';
                     }
 
