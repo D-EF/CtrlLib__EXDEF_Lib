@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-04-29 09:56:57
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-14 20:34:14
+ * @LastEditTime: 2022-05-16 21:39:10
  * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\Viewport_Frame.js
  */
 import { dependencyMapping, Iterator__Tree } from "../basics/Basics.js";
@@ -33,6 +33,8 @@ import { CtrlLib__EXDEF_LIB__XML, ExCtrl_DEF } from "./CtrlLib_EXDEF_LIB.js";
         }]
     }
 // 预设end 
+
+const CHILD_CTRL_ID_B="child_ctrl-EX_for-viewportFrame_List-C";
 
 /** 区域树生成dom使用的遍历器 */
 class Iterator__Viewport_Region_Tree extends Iterator__Tree{
@@ -101,7 +103,7 @@ class Viewport_Frame extends ExCtrl_DEF{
         }
         /** @type {function}  */
         this.view_root_mouse_exit_event=function(e){
-            that.sp_Hand_Exit(e);
+            that.sp_Hand__Exit(e);
         };
     }
     set viewport_tree(new_viewport_tree){
@@ -131,10 +133,9 @@ class Viewport_Frame extends ExCtrl_DEF{
         };
         
         if(d===0){
-            this.sp_Hand_Exit();
+            this.sp_Hand__Exit();
             return;
         }
-
         
         var end_i=path[d]-1;
         /** @type {Viewport_Region_Tree[]} */
@@ -203,7 +204,7 @@ class Viewport_Frame extends ExCtrl_DEF{
     sp_Hand__i(e,path,item){
         this.sp_Hand(e,path.slice(0,-1),item);  
     }
-    sp_Hand_Exit(e){
+    sp_Hand__Exit(e){
         this.view_root.removeEventListener("mousemove",this.view_root_mouse_move_event);
         this.view_root.removeEventListener("mouseup",this.view_root_mouse_exit_event);
         this.view_box_list.classList.remove("viewportFrame-list--changing");
@@ -212,7 +213,21 @@ class Viewport_Frame extends ExCtrl_DEF{
             this.reRender();
         }
     }
-    
+    /** 拆分子窗口
+     * @param {Viewport_Region_Tree} node 父级的区域树的节点
+     * @param {Number} index 当前窗口在父级区域树中的下标
+     * @param {Number} axis 拆分方向 0=水平, 1=垂直
+     */
+    split_Window(path,axis){
+
+    }
+    /** 合并子窗口 将同深度的 index,index+1 窗口合并
+     * @param {Viewport_Region_Tree} node 父级的区域树的节点
+     * @param {Number} index 当前窗口在父级区域树中的下标 
+     */
+    merge_Window(path,axis){
+
+    }
 }
 Viewport_Frame.prototype.AXIS_HEAD  = ["left","top"];
 Viewport_Frame.prototype.AXIS_END   = ["right","bottom"];

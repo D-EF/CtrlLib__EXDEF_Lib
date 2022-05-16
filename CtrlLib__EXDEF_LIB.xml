@@ -45,6 +45,7 @@
             "
         >
             <div class="viewportFrame-childBox"
+                ctrl-id="child_ctrl"
                 api-attr-child_ctrl="this.iterator.get_Now()"
                 ctrl-child_ctrl="${tgt.child_ctrl}"
                 ctrl-child_ctrl_arguments="this.${tgt.child_ctrl+'_Init&&this.'+tgt.child_ctrl+'_Init()'}"
