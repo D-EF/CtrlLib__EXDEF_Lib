@@ -45,7 +45,9 @@
             "
         >
             <div class="viewportFrame-childBox"
-                ctrl-child_ctrl="${this.iterator.get_Now()}"
+                api-attr-child_ctrl="this.iterator.get_Now()"
+                ctrl-child_ctrl="${tgt.child_ctrl}"
+                ctrl-child_ctrl_arguments="this.${tgt.child_ctrl+'_Init&&this.'+tgt.child_ctrl+'_Init()'}"
             >
             </div>
             
@@ -112,3 +114,27 @@
 
 <ctrl_tab/>
 
+<div class="imgList-root" ctrl-id="root" pa-resize="this.renderString();">
+    <ul ctrl-id="list" class="imgList-list" style="left:${this.index*(-100)}%" ctrl-for="this.i=0;this.i<this.data.list.length;++this.i" >
+        <li class="imgList-item"  style="left:${this.i*100}%;">
+            <a class="imgList-itemLink" href="${this.data.list[this.i].url}" title="${this.data.list[this.i].title}">
+                <div class="imgList-itemImgBox">
+                    <img class="imgList-itemImg" src="${this.data.list[this.i].imgurl}"/>
+                </div>
+                <div class="imgList-itemTitleBox">
+                    ${this.data.list[this.i].title}
+                </div>
+            </a>
+        </li>
+    </ul>
+    <div class="imgList-ctrlListBox" >
+        <ul class="imgList-ctrlList"  ctrl-for="this.i=0;this.i<this.data.list.length;++this.i">
+            <li class="imgList-ctrlItem" pa-click="this.setIndex(${this.i})"></li>
+        </ul>
+        <div class="imgList-ctrlListMark" style="top:${this.index*(16)}px;"></div>
+    </div>
+    <div ctrl-id="last" class="imgList-last" pa-click="this.indexStep(-1)"></div>
+    <div ctrl-id="next" class="imgList-next" pa-click="this.indexStep(1)"></div>
+</div>
+
+<ctrl_tab/>

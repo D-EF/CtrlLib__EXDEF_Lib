@@ -77,3 +77,123 @@
     transform: translateY(-50%);
     width: 100%;
 }
+
+
+/* ImgList.  img list */
+
+.imgList-root,.imgList-list,.imgList-item,.imgList-itemLink,.imgList-itemImgBox{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+.imgList-root{
+    border:var(--colorD1) 1px solid;
+}
+.imgList-list{
+    transition:left 0.2s;
+    margin:0;
+    padding:0;
+    overflow:visible;
+}
+.imgList-itemImg{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit: contain;
+    background-color:var(--colorA);
+}
+.imgList-itemTitleBox{
+    background-color:var(--colorA3);
+    position:absolute;
+    bottom:0;
+    width:100%;
+    padding-left:1em;
+    color:var(--colorDT);
+    opacity: 0;
+    transition:opacity 0.05s;
+}
+/* .imgList-itemTitleBox:hover{
+    background-color:var(--colorDT);
+    color:var(--colorC);
+} */
+.imgList-root:hover .imgList-itemTitleBox{
+    opacity: 1;
+}
+
+.imgList-last,.imgList-next{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:32px;
+    height:32px;
+    overflow:hidden;
+    border:var(--colorD1) 2px solid;
+    border-radius:50%;
+    background-color:var(--colorET);
+    opacity: 0;
+    transition:opacity 0.05s;
+}
+.imgList-root:hover .imgList-next,.imgList-root:hover .imgList-last{
+    opacity: 1;
+}
+.imgList-last::before,.imgList-next::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-image:url("/css/DEF_UI/img/iconSprites.svg");
+    background-size:1000% 1000%;
+    background-position:0 -200%;
+    filter: hue-rotate(120deg) brightness(2);
+}
+.imgList-last:hover::before,.imgList-next:hover::before{
+    filter: hue-rotate(0) brightness(1) drop-shadow(0px 0px 6px);
+}
+.imgList-last::before{
+    transform:scaleX(-1);
+    left:-12%;
+}
+.imgList-next::before{
+    left:12%;
+}
+.imgList-last{
+    left:8px;
+}
+.imgList-next{
+    right:8px;
+}
+.imgList-ctrlListBox{
+    opacity: 0.4;
+    transition:opacity 0.05s;
+    position:absolute;
+    right:0;
+    bottom:0;
+}
+.imgList-root:hover .imgList-ctrlListBox{
+    opacity: 1;
+}
+
+.imgList-ctrlList{
+    width:16px;
+    height:auto
+}
+.imgList-ctrlItem,.imgList-ctrlListMark{
+    position:relative;
+    border-radius:50%;
+    width:12px;
+    height:12px;
+    background-color:var(--colorD1);
+    margin-bottom:4px;
+}
+.imgList-ctrlListMark{
+    position:absolute;
+    transition:top 0.2s;
+}
+.imgList-ctrlItem:hover,.imgList-ctrlListMark{
+    background-color:var(--colorCT);
+}
