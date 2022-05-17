@@ -1,11 +1,10 @@
 /*
  * @Date: 2022-04-29 09:56:57
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-16 21:39:10
+ * @LastEditTime: 2022-05-17 21:28:02
  * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\Viewport_Frame.js
  */
 import { dependencyMapping, Iterator__Tree } from "../basics/Basics.js";
-import { CtrlLib, DEF_VirtualElementList as VES } from "../CtrlLib/CtrlLib.js";
 import { CtrlLib__EXDEF_LIB__XML, ExCtrl_DEF } from "./CtrlLib_EXDEF_LIB.js";
 
 // 预设open
@@ -35,6 +34,12 @@ import { CtrlLib__EXDEF_LIB__XML, ExCtrl_DEF } from "./CtrlLib_EXDEF_LIB.js";
 // 预设end 
 
 const CHILD_CTRL_ID_B="child_ctrl-EX_for-viewportFrame_List-C";
+/** 分割视口的工具 树 */
+const SP_TOOL_TREE={
+    children:[
+
+    ]
+}
 
 /** 区域树生成dom使用的遍历器 */
 class Iterator__Viewport_Region_Tree extends Iterator__Tree{
@@ -49,7 +54,6 @@ class Iterator__Viewport_Region_Tree extends Iterator__Tree{
         super.init();
     }
     next(){
-        
         super.next();
         var d=this._depth;
         var p=this._now_path[this._now_path.length-1];
@@ -213,20 +217,36 @@ class Viewport_Frame extends ExCtrl_DEF{
             this.reRender();
         }
     }
+    /** 
+     * @param {HTMLElement} tgtparentElement 
+     */
+    sp_Hand__EX(tgtparentElement){
+        this.callChild("context_menu");
+    }
     /** 拆分子窗口
      * @param {Viewport_Region_Tree} node 父级的区域树的节点
      * @param {Number} index 当前窗口在父级区域树中的下标
      * @param {Number} axis 拆分方向 0=水平, 1=垂直
+     * @param {Number} di 该视口在渲染时的di
      */
-    split_Window(path,axis){
-
+    split_Viewport(node,index,axis,di){
+        CHILD_CTRL_ID_B
     }
     /** 合并子窗口 将同深度的 index,index+1 窗口合并
      * @param {Viewport_Region_Tree} node 父级的区域树的节点
      * @param {Number} index 当前窗口在父级区域树中的下标 
+     * @param {Number} di 该视口在渲染时的di 
+     * @param {Boolean} before_or_after 向前或向后合并
      */
-    merge_Window(path,axis){
+    merge_Viewport(node,index){
 
+    }
+
+
+    init_SPContextMenu(){
+        return {
+            sp_ToolTree
+        }
     }
 }
 Viewport_Frame.prototype.AXIS_HEAD  = ["left","top"];

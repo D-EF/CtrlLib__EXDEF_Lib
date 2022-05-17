@@ -51,8 +51,7 @@
                 ctrl-child_ctrl_arguments="this.${tgt.child_ctrl+'_Init&&this.'+tgt.child_ctrl+'_Init()'}"
             >
             </div>
-            
-            <div class="viewportFrame-hand-ex"></div>
+            <div class="viewportFrame-hand-ex" pa-contextmenu="call_SPMenu(tgt.parentElement)"></div>
             <div pa-mousedown="this.sp_Hand   (e,tgt.parentElement.path,tgt.parentElement)" class="viewportFrame-hand-sp"></div>
             <div pa-mousedown="this.sp_Hand__i(e,tgt.parentElement.path,tgt.parentElement)" class="viewportFrame-hand-sp_i"></div>
         </li>
@@ -68,6 +67,8 @@
                 tempE=tempE.previousElementSibling;
             }
     "></div>
+    <div ctrl-id="sp_context_menu" ctrl-child_ctrl="ContextMenu" ctrl-child_ctrl_arguments="this.init_SPContextMenu()" >
+    </div>
 </div>
 
 <ctrl_tab/>
@@ -137,5 +138,9 @@
     <div ctrl-id="last" class="imgList-last" pa-click="this.indexStep(-1)"></div>
     <div ctrl-id="next" class="imgList-next" pa-click="this.indexStep(1)"></div>
 </div>
+
+<ctrl_tab/>
+
+<div class="contextMenu-root" ctrl-child_ctrl="ToolBox" ctrl-child_ctrl_arguments="this.init_Tool()" ></div>
 
 <ctrl_tab/>

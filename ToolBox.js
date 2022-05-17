@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-04-26 10:10:01
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-09 16:02:28
+ * @LastEditTime: 2022-05-17 21:29:14
  * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\ToolBox.js
  */
 
@@ -33,7 +33,7 @@ class ToolBox extends ExCtrl_DEF {
         this.eg=[];
         this.folded_open_CSS_select=".cnm";
     }
-    /** 切换工具
+    /** 激活工具
      * @param {Tool_Node} tool 
      */
     tab_Tool(tool,path){
