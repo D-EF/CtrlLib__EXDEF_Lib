@@ -7,9 +7,11 @@
 -->
 <ctrl_tab/>
 
-<div class="viewportFrame-root" ctrl-id="viewportFrame_root">
+<!-- 1 ViewportFrame -->
+<div class="viewportFrame-root" ctrl-id="viewportFrame_root" ca-render="this.gc();">
     <ul class="viewportFrame-list" ctrl-id="viewportFrame_List" ctrl-for="this.iterator.init();this.iterator.is_NotEnd();this.iterator.next()">
         <li 
+            ctrl-id="viewport_frame_item"
             style="
                 top: ${this.iterator.temp[1]}%;
                 left:${this.iterator.temp[0]}%;
@@ -22,6 +24,7 @@
             api-attr-path="this.iterator.get_Now__Path()"
             api-attr-node_path="this.iterator.get_Now__NodePath()"
             class="viewportFrame-item viewportFrame-axis${tgt.axis}"
+            ctrl-ea="console.log(this.iterator.get_Now__Di());"
             ca-render="
                 var tempE=tgt.previousElementSibling;
                 if(!tempE)return;
@@ -51,7 +54,7 @@
                 ctrl-child_ctrl_arguments="this.${tgt.child_ctrl+'_Init&&this.'+tgt.child_ctrl+'_Init()'}"
             >
             </div>
-            <div class="viewportFrame-hand-ex" pa-contextmenu="call_SPMenu(tgt.parentElement)"></div>
+            <div class="viewportFrame-hand-ex" pa-contextmenu="this.sp_Hand__EX(tgt.parentElement)"></div>
             <div pa-mousedown="this.sp_Hand   (e,tgt.parentElement.path,tgt.parentElement)" class="viewportFrame-hand-sp"></div>
             <div pa-mousedown="this.sp_Hand__i(e,tgt.parentElement.path,tgt.parentElement)" class="viewportFrame-hand-sp_i"></div>
         </li>
@@ -67,11 +70,12 @@
                 tempE=tempE.previousElementSibling;
             }
     "></div>
-    <div ctrl-id="sp_context_menu" ctrl-child_ctrl="ContextMenu" ctrl-child_ctrl_arguments="this.init_SPContextMenu()" >
-    </div>
+    <div ctrl-id="sp_context_menu" class="hidden" ctrl-child_ctrl="ToolBox" ctrl-child_ctrl_arguments="this.init_SPContextMenu()" ></div>
 </div>
 
 <ctrl_tab/>
+
+<!-- 2 ToolBox -->
 
 <ctrlstyle>
     ${this.folded_CSS_select}{
@@ -84,7 +88,7 @@
 <div class="toolBox-main"  pa-mousedown="console.log(${window.i})">
     <ul class="toolBox-list" pa-mouseleave="this.hiddenHand()" 
         pa-mouseover="this.showHand(e.target)" 
-        pa-click="this.tab_Tool(e.target)"
+        pa-click="this.touch_Hand__Tool(e.target)"
         ctrl-for="this.list_iterator.init(),this.maxDepth=0;this.list_iterator.is_NotEnd();this.list_iterator.next()"
         ctrl-id="toolList"
     >
@@ -94,7 +98,7 @@
             api-attr-depth="this.list_iterator.get_Now__Depth()"
             api-attr-tool="this.list_iterator.get_Now()"
             class="toolBox-item toolBox-item-d${tgt.depth}" 
-            title="${tgt.tool.tip} (${tgt.tool.hotkey.join('+')})"
+            title="${tgt.tool.tip} ${(tgt.tool.hotkey&&('('+tgt.tool.hotkey.join('+')+')'))||''})"
             ctrl-style="transform:translate(${tgt.depth*100}%,0);
                     margin-top:calc(var(--toolbox-width) * ${this.previousElement&&
                     (this.previousElement.path.length>tgt.path.length?
@@ -109,13 +113,15 @@
                 (this.previousElement=tgt),
                 ((this.maxDepth>=tgt.depth)||(this.maxDepth=tgt.depth)),''}"
         >
-            <i class="toolBox-item-icon iconSpritesSvg iconSpritesSvg-${this.list_iterator.get_Now().u+''+this.list_iterator.get_Now().v}"></i>
+            <i class="toolBox-item-icon iconSpritesSvg iconSpritesSvg-${this.list_iterator.get_Now().icon_key||' hidden'}"></i>
+            <span class="toolBox-tip"> ${this.list_iterator.get_Now().tip}</span>
         </li>
     </ul>
 </div>
 
 <ctrl_tab/>
 
+<!-- 3 ImgList -->
 <div class="imgList-root" ctrl-id="root" pa-resize="this.renderString();">
     <ul ctrl-id="list" class="imgList-list" style="left:${this.index*(-100)}%" ctrl-for="this.i=0;this.i<this.data.list.length;++this.i" >
         <li class="imgList-item"  style="left:${this.i*100}%;">
@@ -138,9 +144,5 @@
     <div ctrl-id="last" class="imgList-last" pa-click="this.indexStep(-1)"></div>
     <div ctrl-id="next" class="imgList-next" pa-click="this.indexStep(1)"></div>
 </div>
-
-<ctrl_tab/>
-
-<div class="contextMenu-root" ctrl-child_ctrl="ToolBox" ctrl-child_ctrl_arguments="this.init_Tool()" ></div>
 
 <ctrl_tab/>

@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-05-04 20:28:00
  * @LastEditors: Darth_Eternalfaith
- * @LastEditTime: 2022-05-17 21:16:33
+ * @LastEditTime: 2022-05-18 10:55:30
  * @FilePath: \PrimitivesTGT-2D_Editor\js\import\CtrlLib__EXDEF_LIB\CtrlLib_EXDEF_LIB.js
  */
 import { add_DependencyListener, dependencyMapping, getCurrAbsPath, remove_DependencyListener_all, rltToAbs } from "../basics/Basics.js"
@@ -28,8 +28,6 @@ const XML_MAPPING=[
     "Viewport_Frame",
     "ToolBox",
     "ImgList",
-    "ToolBox",
-    "ContextMenu"
 ];
 
 /** @type {type__CtrlLib__EXDEF_LIB__XML} */
@@ -59,7 +57,7 @@ class ExCtrl_DEF extends ExCtrl{
             if(xml_loaded){
                 that.addend(element);
             }
-        })
+        });
         return "stop";
     }
 }
